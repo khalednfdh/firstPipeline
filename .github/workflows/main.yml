@@ -21,6 +21,10 @@ jobs:
          distribution: 'temurin'
          java-version: '17'
 
+     # Grant execute permission to Maven Wrapper
+     - name: Grant Execute Permission to Maven Wrapper
+       run: chmod +x ./mvnw
+
      # Build the Spring Boot application
      - name: Build Spring Boot JAR
        run: ./mvnw clean package -DskipTests
@@ -40,7 +44,7 @@ jobs:
      - name: Push Docker Image
        run: docker push ${{ secrets.DOCKER_USERNAME }}/spring-boot-demo:v2
 
-     # Upload Artifact for deployment job (using v3)
+     # Upload Artifact for deployment job (using v4)
      - name: Upload Artifact for deployment job
        uses: actions/upload-artifact@v4
        with:
@@ -61,4 +65,3 @@ jobs:
          app-name: springboot-app-test
          publish-profile: ${{ secrets.PUBLISH_PROFILE }}
          package: '*.jar'
- 
