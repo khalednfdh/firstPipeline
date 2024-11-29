@@ -14,8 +14,7 @@ public class FirstPipelineApplication {
 	}
 
 	@GetMapping("/hello")
-	String jenkinsMessage(){
-		return  "hello world   CI  CD !!!!";
+	String jenkinsMessage() {
+		return "hello world   CI / CD created by khaled and belgacem ";
 	}
-
 }
