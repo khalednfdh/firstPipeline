@@ -13,9 +13,9 @@ public class FirstPipelineApplication {
 		SpringApplication.run(FirstPipelineApplication.class, args);
 	}
 
-	@GetMapping("/jenkins")
+	@GetMapping("/hello")
 	String jenkinsMessage(){
-		return  "hello world  from jenkins !!!!";
+		return  "hello world   CI  CD !!!!";
 	}
 
 }
