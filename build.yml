@@ -1,59 +1,123 @@
-name: Build and Push Docker Image
+#name: Build and Push Docker Image
+#
+#on:
+#  push:
+#    branches:
+#      - main  # Trigger on push to the main branch
+#
+#jobs:
+#  build-and-push:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      # Checkout the repository
+#      - name: Checkout Code
+#        uses: actions/checkout@v3
+#
+#      # Set up JDK for building the project
+#      - name: Set up JDK
+#        uses: actions/setup-java@v3
+#        with:
+#          distribution: 'temurin'
+#          java-version: '17'
+#
+#      # Build the Spring Boot application
+#      - name: Build Spring Boot JAR
+#        run: ./mvnw clean package -DskipTests
+#
+#      # Log in to Docker Hub
+#      - name: Log in to Docker Hub
+#        uses: docker/login-action@v2
+#        with:
+#          username: ${{ secrets.DOCKER_USERNAME }}
+#          password: ${{ secrets.DOCKER_PASSWORD }}
+#
+#      # Build Docker image
+#      - name: Build Docker Image
+#        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/spring-boot-demo:v2 .
+#
+#      # Push Docker image to Docker Hub
+#      - name: Push Docker Image
+#        run: docker push ${{ secrets.DOCKER_USERNAME }}/spring-boot-demo:v2
+#        # Upload Artifacct for deployment job
+#      - name: Upload Artifacct for deployment job
+#        uses: actions/upload-artifact@v2
+#        with:
+#            name: springboot-example
+#            path: ${{ github.workspace }}/target/*.jar
+#  deploy:
+#    runs-on: ubuntu-latest
+#    needs: build-and-push
+#    steps:
+#      - name: Download Artifact from build job
+#        uses: actions/download-artifact@v2
+#        with:
+#          name: springboot-example
+#      - name: Deploy to Azure App Service
+#        uses: azure/webapps-deploy@v2
+#        with:
+#          app-name: springboot-app-test
+#          publish-profile: ${{ secrets.PUBLISH_PROFILE }}
+#          package: '*.jar'
+name: Build et Déploiement de l'Application Spring Boot
 
 on:
   push:
     branches:
-      - main  # Trigger on push to the main branch
+      - main  # Déclenche sur un push vers la branche principale
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository
+      # Checkout du code
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Set up JDK for building the project
+      # Configuration du JDK pour la construction du projet
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      # Build the Spring Boot application
+      # Construction de l'application Spring Boot
       - name: Build Spring Boot JAR
         run: ./mvnw clean package -DskipTests
 
-      # Log in to Docker Hub
+      # Connexion à Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Build Docker image
+      # Construction de l'image Docker
       - name: Build Docker Image
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/spring-boot-demo:v2 .
 
-      # Push Docker image to Docker Hub
+      # Pousser l'image Docker sur Docker Hub
       - name: Push Docker Image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/spring-boot-demo:v2
-        # Upload Artifacct for deployment job
-      - name: Upload Artifacct for deployment job
+
+      # Télécharger l'artéfact pour le job de déploiement
+      - name: Upload Artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
-            name: springboot-example
-            path: ${{ github.workspace }}/target/*.jar
+          name: springboot-example
+          path: ${{ github.workspace }}/target/*.jar
+
   deploy:
     runs-on: ubuntu-latest
-    needs: build-and-push
+    needs: build-and-push  # Correction de la dépendance
     steps:
-      - name: Download Artifact from build job
+      - name: Télécharger l'artéfact du job de construction
         uses: actions/download-artifact@v2
         with:
           name: springboot-example
-      - name: Deploy to Azure App Service
+
+      - name: Déployer sur Azure App Service
         uses: azure/webapps-deploy@v2
         with:
           app-name: springboot-app-test
