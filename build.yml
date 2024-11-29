@@ -59,6 +59,7 @@
 #          app-name: springboot-app-test
 #          publish-profile: ${{ secrets.PUBLISH_PROFILE }}
 #          package: '*.jar'
+#khaled
 
 name: Deploy App to Azure App Service
 
