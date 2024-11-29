@@ -24,6 +24,10 @@ jobs:
      # Grant execute permission to Maven Wrapper
      - name: Grant Execute Permission to Maven Wrapper
        run: chmod +x ./mvnw
+     # Clean up old JAR files (optional step)
+     # Clean up old JAR files (optional step)
+     - name: Clean Up Old JAR Files
+       run: rm -f target/*.jar
 
      # Build the Spring Boot application
      - name: Build Spring Boot JAR
