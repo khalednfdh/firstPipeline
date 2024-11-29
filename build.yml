@@ -40,7 +40,7 @@ jobs:
       - name: Push Docker Image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/spring-boot-demo:v2
 
-      # Upload Artifact for deployment job
+      # Upload Artifact for deployment job (using v3)
       - name: Upload Artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
