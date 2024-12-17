@@ -18,8 +18,9 @@ public class FirstPipelineApplication {
 		return "hello world   CI / CD created by khaled and belgacem ";
 	}
 
-	@GetMapping("/test")
-	String test() {
-		return "hello world   CI / CD created by khaled and belgacem ";
+	@GetMapping("/api/v1")
+	String  getProducts() {
+		 Product product = new Product("Product Name" , 1000D , 1000D);
+		 return  product.toString();
 	}
 }

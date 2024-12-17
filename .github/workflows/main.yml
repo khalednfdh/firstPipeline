@@ -30,7 +30,7 @@ jobs:
        run: rm -f target/*.jar
 
      # Build the  Test unitaire
-     - name: Build Spring Boot JAR
+     - name: Build the  Test unitaire
        run: ./mvnw  test
 
      # Build the Spring Boot application
