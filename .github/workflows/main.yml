@@ -29,6 +29,10 @@ jobs:
      - name: Clean Up Old JAR Files
        run: rm -f target/*.jar
 
+     # Build the  Test unitaire
+     - name: Build Spring Boot JAR
+       run: ./mvnw  test
+
      # Build the Spring Boot application
      - name: Build Spring Boot JAR
        run: ./mvnw clean  install -DskipTests
